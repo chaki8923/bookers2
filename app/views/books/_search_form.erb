@@ -1,0 +1,20 @@
+<form action="<%= searches_path %>" method="GET" class="form-inline">
+  <div class="form-group">
+    <input type="text" class="form-control" name="keyword" placeholder="キーワード">
+  </div>
+  <div class="form-group">
+    <select class="form-control" name="category">
+      <option value="user">User</option>
+      <option value="book">Book</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" name="match_type">
+      <option value="prefix">前方一致</option>
+      <option value="suffix">後方一致</option>
+      <option value="exact">完全一致</option>
+      <option value="partial">部分一致</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">検索</button>
+</form>

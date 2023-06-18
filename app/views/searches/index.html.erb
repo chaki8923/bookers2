@@ -1,0 +1,6 @@
+
+<% if @category == 'user' %>
+  <%= render partial: 'user_index', locals: { users: @results } %>
+<% elsif  @category == 'book'  %>
+  <%= render 'book_index',books: @results %>
+<% end %>
