@@ -16,6 +16,22 @@
             <% end %>
           </td>
           <td><%= link_to @book.title, @book %></td>
+          <td>
+            <% if @book.favorited_by?(current_user) %>
+              <p>
+                <%= link_to book_favorites_path(@book), method: :delete do %>
+                  <i class="fa-solid fa-heart" style="color: #ea2a46;"></i>　<%= @book.favorites.count %>
+                <% end %>
+              </p>
+              <% else %>
+              <p>
+                <%= link_to book_favorites_path(@book), method: :post do %>
+                  <i class="fa-regular fa-heart" style="color: #716f6f;"></i>　<%= @book.favorites.count %>
+                <% end %>
+              </p>
+            <% end %>
+          </td>
+          <td>コメント数：<%= @book.book_comments.count %></td>
           <td><%= @book.body %></td>
             <% if current_user.id == @book.user.id %>
               <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
@@ -23,6 +39,13 @@
             <% end %>
         </tr>
       </table>
+      <div>
+      <% @book.book_comments.each do |book_comment| %>
+        <%= book_comment.user.name %>
+        <%= book_comment.created_at.strftime('%Y/%m/%d') %><%= book_comment.comment %>
+      <% end %>
+    </div>
+      <%= render 'comment_form', book_comment: @book_comment %>
     </div>
   </div>
 </div>
