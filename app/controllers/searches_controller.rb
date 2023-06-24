@@ -4,8 +4,7 @@ class SearchesController < ApplicationController
     @category = params[:category]
     match_type = params[:match_type]
     @results = search(keyword, @category, match_type)
-   ## TODO：あとで消す
-    Rails.logger.debug " @results---------------------------------#{@results.inspect}"
+
     render 'searches/index'
   end
   
@@ -14,8 +13,6 @@ class SearchesController < ApplicationController
     if category == 'user'
       case match_type
       when 'prefix'
-        ## TODO：あとで消す
-        Rails.logger.debug "入ってる---------------------------------#{}"
         User.where('name LIKE ?', "#{keyword}%")
       when 'suffix'
         User.where('name LIKE ?', "%#{keyword}")

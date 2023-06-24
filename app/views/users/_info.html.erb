@@ -2,11 +2,15 @@
   <tr><%= image_tag user.get_profile_image, size:'100x100' %></tr>
   <tr>
 	  <th>name</th>
-	  <th><%= user.name %></th>
+	  <% if user.name.present? %>
+	    <th><%= user.name %></th>
+	  <% end %>
   </tr>
   <tr>
 	  <th>introduction</th>
+	  <% if user.introduction.present? %>
 	  <th><%= user.introduction %></th>
+	  <% end %>
   </tr>
 </table>
 <div class='row'>

@@ -3,13 +3,18 @@ class FavoritesController < ApplicationController
     @book = Book.find(params[:book_id])
     @favorite = current_user.favorites.build(book: @book)
     @favorite.save
-    redirect_to request.referer
+    respond_to do |format|
+      format.js   # 追加
+    end
   end
   
   def destroy
+    @book = Book.find(params[:book_id])
     @favorite = current_user.favorites.find_by(book_id: params[:book_id])
     @favorite.destroy
-    redirect_to request.referer
+    respond_to do |format|
+      format.js   # 追加
+    end
   end
   
   private

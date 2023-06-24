@@ -1,0 +1,3 @@
+
+// いいねボタンのアイコンを切り替え
+$(".favorite-btn-<%= @book.id %>").html("<%= j(render 'favorites/favorite_btn', book: @book) %>");

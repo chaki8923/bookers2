@@ -8,4 +8,8 @@ class Book < ApplicationRecord
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
+  
+  def total_favorites_last_week
+    favorites.where(created_at: 1.week.ago..Time.current).count
+  end
 end
