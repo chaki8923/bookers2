@@ -17,10 +17,15 @@
         <td>フォロー数: <%= user.followings.count %></td>
         <td>フォロワー数: <%= user.followers.count %></td>
         <td>
-        <% if current_user.following?(user) %>
-          <%= link_to 'フォロー外す',  relationship_path(id: user.id), method: :delete, class: 'btn btn-primary'  %>
-        <% else %>
-          <%= link_to 'フォロー',  relationships_path(follow_id: user.id), method: :post, class: 'btn btn-secondary'  %>
+        <% if user.id != current_user.id %>
+          <% if current_user.following?(user) %>
+            <%= link_to 'フォロー外す',  relationship_path(id: user.id), method: :delete, class: 'btn btn-primary'  %>
+            <% if current_user.following?(user) &&  user.following?(current_user)%>
+              <%= link_to 'chatを開始',  chats_path(user_id: user.id), method: :get, class: 'btn btn-primary'  %>
+            <% end %>
+          <% else %>
+            <%= link_to 'フォロー',  relationships_path(follow_id: user.id), method: :post, class: 'btn btn-secondary'  %>
+          <% end %>
         <% end %>
         </td>
         <td><%= link_to 'Show', user %></td>
