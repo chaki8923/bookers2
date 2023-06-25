@@ -9,4 +9,5 @@ class Chat < ApplicationRecord
           sender_id, receiver_id, receiver_id, sender_id)
   end
 
+  
 end

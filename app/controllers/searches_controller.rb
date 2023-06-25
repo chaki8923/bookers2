@@ -8,6 +8,7 @@ class SearchesController < ApplicationController
     render 'searches/index'
   end
   
+  
   private
   def search(keyword, category, match_type)
     if category == 'user'

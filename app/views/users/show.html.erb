@@ -11,6 +11,18 @@
       <% if @books.present? %>
         <%= render 'books/index',books: @books %>
       <% end %>
+      <%= render 'books/count_table', type: 'day'%>
+      <%= render 'books/count_table', type: 'week' %>
+      <%= render 'books/chart' %>
+      <%= form_with model:@user, url: user_search_count_path(params[:id]),local: false,class: 'class="form-inline', method: 'get' do |f| %>
+        <div class="form-group">
+          <input type="date" class="form-control" name="date" >
+        </div>
+        <button type="submit" class="btn btn-primary">検索</button>
+      <% end %>
+      <div class="day_of_count">
+       
+      </div>
     </div>
   </div>
 </div>

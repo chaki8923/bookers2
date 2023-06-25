@@ -23,6 +23,14 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
+  
+  def search_count
+    @user = User.find(params[:id])
+    @dat_of_count =  @user.books.where("DATE(created_at) = ?", params[:date]).count
+    respond_to do |format|
+      format.js
+    end
+  end
 
   private
 
@@ -36,4 +44,5 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
+
 end

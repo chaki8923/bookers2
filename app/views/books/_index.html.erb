@@ -6,12 +6,13 @@
       <th>Opinion</th>
       <th></th>
        <th></th>
+       <th></th>
       <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
     <% if books.present? %>
-    <% books.each do |book| %>
+      <% books.each do |book| %>
       <tr>
         <td><%= link_to(book.user) do %>
           <%= image_tag book.user.get_profile_image, size:'50x50' %>
@@ -23,8 +24,10 @@
           <%= render 'favorites/favorite_btn', book: book %>
         </td>
         <td>コメント数：<%= book.book_comments.count %></td>
+        <td>閲覧数：<%= book.safe_view_count %></td>
       </tr>
        <% end %>
     <% end %>
   </tbody>
 </table>
+

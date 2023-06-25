@@ -4,11 +4,13 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @new_form_book = Book.new
     @book_comment = BookComment.new
+    increment_view_count(@book)
   end
 
   def index
     @book =  Book.new
     @books = Book.all.sort_by { |book| -book.total_favorites_last_week }
+    # @user = current_user
   end
 
   def create
@@ -42,6 +44,12 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @book.delete
     redirect_to books_path
+  end
+  
+  def increment_view_count(book)
+    view_count = book.view_counts.find_or_create_by(book_id: book.id, user_id: current_user.id)
+    view_count.increment!(:count)
+    view_count.save
   end
 
   private
