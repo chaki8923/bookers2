@@ -16,6 +16,9 @@ class User < ApplicationRecord
   has_many :followings, through: :follower_relationships, source: :followed
   # followed_relationships経由でfollowerと多対多の関係
   has_many :followers, through: :followed_relationships, source: :follower
+  
+  has_many :group_users
+  has_many :groups, through: :group_users
 
 
   has_one_attached :profile_image
@@ -39,5 +42,32 @@ class User < ApplicationRecord
   
   def following?(user)
     followings.include?(user)
+  end
+
+    
+  def post_books_count(user_id, day)
+    user = User.find(user_id)
+    today = Date.today
+
+    case day
+      when 'today'
+        user.books.where("DATE(created_at) = ?", today).count
+      when 'yesterday'
+        user.books.where("DATE(created_at) = ?", today - 1.day).count
+      when 'this_week'
+        start_of_this_week = today.beginning_of_week
+        end_of_this_week = today.end_of_week
+        user.books.where("DATE(created_at) >= ? AND DATE(created_at) <= ?", start_of_this_week, end_of_this_week).count
+      when 'last_week'
+        start_of_last_week = (today - 1.week).beginning_of_week
+        end_of_last_week = (today - 1.week).end_of_week
+        user.books.where("DATE(created_at) >= ? AND DATE(created_at) <= ?", start_of_last_week, end_of_last_week).count
+    end
+    
+  end
+  
+  def week_day_count(user_id, n)
+    user = User.find(user_id)
+    user.books.where("DATE(created_at) = ?", Date.today - n.day).count
   end
 end

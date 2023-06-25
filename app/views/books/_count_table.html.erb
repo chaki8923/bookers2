@@ -1,0 +1,58 @@
+<%
+today_count = @user.post_books_count(params[:id], 'today')
+yesterday_count = @user.post_books_count(params[:id], 'yesterday')
+this_week_count = @user.post_books_count(params[:id], 'this_week')
+last_week_count = @user.post_books_count(params[:id], 'last_week')
+%>
+<% if type == 'day' %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">今日の投稿数</th>
+      <th scope="col">前日の投稿数</th>
+      <th scope="col">差分</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= today_count  %></td>
+      <td><%= yesterday_count %></td>
+      <td><%= today_count - yesterday_count %></td>
+    </tr>
+  </tbody>
+</table>
+<% elsif type == 'week' %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">今週の投稿数</th>
+      <th scope="col">先週の投稿数</th>
+      <th scope="col">差分</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= this_week_count  %></td>
+      <td><%= last_week_count %></td>
+      <td><%= this_week_count - last_week_count %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <% 7.downto(1) do |n| %>
+        <th scope="col"><%= n %>日前</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       <% 7.downto(1) do |n| %>
+        <td><%= @user.week_day_count(params[:id],n)  %></td>
+       <% end %>
+    </tr>
+  </tbody>
+</table>
