@@ -1,3 +1,5 @@
+
+<div class="d-flex p-2 bd-highlight justify-content-end" >
 <form action="<%= searches_path %>" method="GET" class="form-inline search_form">
   <div class="form-group">
     <input type="text" class="form-control" name="keyword" placeholder="キーワード">
@@ -18,3 +20,10 @@
   </div>
   <button type="submit" class="btn btn-primary">検索</button>
 </form>
+<form action="<%= searches_path %>" method="GET" class="form-inline search_form">
+  <div class="form-group">
+    <input type="text" class="form-control" name="tags" placeholder="タグを入力">
+  </div>
+  <button type="submit" class="btn btn-primary">タグ検索</button>
+</form>
+</div>

@@ -16,7 +16,12 @@
       <%= render 'layouts/search_form' %>
     <% end %>
       <main>
-        <p id="notice"><%= notice %></p>
+        <% if flash[:error] %>
+        <div class="error">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
+
         <%= yield %>
       </main>
     <%= render 'layouts/footer' %>

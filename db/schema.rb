@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_25_084401) do
+ActiveRecord::Schema.define(version: 2023_07_02_045336) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 2023_06_25_084401) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "star"
+    t.string "tags"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -83,11 +85,19 @@ ActiveRecord::Schema.define(version: 2023_06_25_084401) do
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.text "introduction"
-    t.integer "user_id"
-    t.integer "group_id"
     t.integer "owner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "group_id", null: false
+    t.index ["group_id"], name: "index_notifications_on_group_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -125,6 +135,5 @@ ActiveRecord::Schema.define(version: 2023_06_25_084401) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "users", column: "receiver_id"
   add_foreign_key "chats", "users", column: "sender_id"
-  add_foreign_key "view_counts", "books"
-  add_foreign_key "view_counts", "users"
+  add_foreign_key "notifications", "groups"
 end

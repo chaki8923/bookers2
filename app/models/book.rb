@@ -2,7 +2,8 @@ class Book < ApplicationRecord
   belongs_to :user
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
-  has_many :view_counts
+  has_many :view_counts, dependent: :destroy
+  
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
   
@@ -15,8 +16,7 @@ class Book < ApplicationRecord
   end
   
   def safe_view_count
-    view_counts&.count || 0
+    view_counts.first&.count || 0
   end
   
-
 end

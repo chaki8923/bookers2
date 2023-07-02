@@ -75,4 +75,8 @@ Rails.application.configure do
   config.hosts << "33c1c99da5214eeeaa09783484f85072.vfs.cloud9.us-east-1.amazonaws.com"
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: '33c1c99da5214eeeaa09783484f85072.vfs.cloud9.us-east-1.amazonaws.com', port: 3000, protocol: 'https'}
 end
