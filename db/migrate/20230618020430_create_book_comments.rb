@@ -7,5 +7,7 @@ class CreateBookComments < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+    add_foreign_key :book_comments, :users
+    add_foreign_key :book_comments, :books
   end
 end

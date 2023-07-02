@@ -1,22 +1,45 @@
 <table class='table table-hover table-inverse'>
   <thead>
     <tr>
-      <th></th>
       <th>Title</th>
       <th>Opinion</th>
+      <th>Tag</th>
+      <th></th>
+       <th></th>
+       <th></th>
       <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
     <% if books.present? %>
-    <% books.each do |book| %>
+      <% books.each do |book| %>
       <tr>
         <td><%= link_to(book.user) do %>
           <%= image_tag book.user.get_profile_image, size:'50x50' %>
           <% end %>
+           <div id="post_raty<%= book.id %>"></div>
+           
+          <script>
+            // scriptファイルをどのidの部分に配置するかを指定
+            $('#post_raty<%= book.id  %>').empty();
+            var elem<%= book.id  %> = document.querySelector('#post_raty<%= book.id  %>');
+            var opt<%= book.id  %> = {  
+               starOn: "<%= asset_path('star-on.png') %>",
+               starOff: "<%= asset_path('star-off.png') %>",
+               score: <%= book.star  %>,
+               readOnly: true
+             };
+            raty(elem<%= book.id  %>,opt<%= book.id  %>);
+          </script>
         </td>
         <td><%= link_to book.title,book %></td>
         <td><%= book.body %></td>
+        <td><%= book.tags %></td>
+        <td>
+          <%= render 'favorites/favorite_btn', book: book %>
+        </td>
+        <td>コメント数：<%= book.book_comments.count %></td>
+        <td>閲覧数：<%= book.safe_view_count %></td>
       </tr>
        <% end %>
     <% end %>

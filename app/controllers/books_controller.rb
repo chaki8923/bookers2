@@ -9,7 +9,11 @@ class BooksController < ApplicationController
 
   def index
     @book =  Book.new
-    @books = Book.all.sort_by { |book| -book.total_favorites_last_week }
+    @books = Book.all
+    @books = @books.all.sort_by { |book| -book.total_favorites_last_week } if params[:sort].nil?
+    @books = @books.order(created_at: :desc) if params[:sort] == 'latest'
+    @books = @books.order(star: :desc) if params[:sort] == 'star'
+    @books = Book.where('tags LIKE ?', "%#{params[:tags]}%") if params[:tags].present?
     # @user = current_user
   end
 
@@ -20,7 +24,21 @@ class BooksController < ApplicationController
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
-      render 'index'
+      url = request.referrer
+      ## TODO：あとで消す
+      Rails.logger.debug "url---------------------------------#{url}"
+      if url.include?('books')
+        # booksコントローラから呼び出された場合の処理
+        render 'index'
+      elsif url.include?('users')
+        # usersコントローラから呼び出された場合の処理
+         Rails.logger.debug "こっちな---------------------------------#{url}"
+        flash[:error] = @book.errors.full_messages.join(", ")
+        redirect_to users_path
+      else
+        # その他のコントローラから呼び出された場合の処理
+      end
+      
     end
   end
 
@@ -42,6 +60,8 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
+    ## TODO：あとで消す
+    Rails.logger.debug "@book---------------------------------#{@book.inspect}"
     @book.delete
     redirect_to books_path
   end
@@ -55,6 +75,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :star, :tags)
   end
 end

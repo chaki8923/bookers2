@@ -1,0 +1,15 @@
+<h1>送信が完了しました</h1>
+<table class="complete-table">
+  <tr>
+    <th>Title</th>
+    <td><%= @notification.title %></td>
+  </tr>
+  <tr>
+    <th>Body</th>
+    <td> <%= @notification.body %></td>
+  </tr>
+  <tr>
+    <th>送信日時</th>
+    <td><%= @notification.created_at %></td>
+  </tr>
+</table>
