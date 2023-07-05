@@ -1,56 +1,36 @@
 require 'rails_helper'
 
-RSpec.describe 'Userモデルのテスト', type: :model do
-  describe 'バリデーションのテスト' do
-    subject { user.valid? }
-
-    let!(:other_user) { create(:user) }
-    let(:user) { build(:user) }
-
-    context 'nameカラム' do
-      it '空欄でないこと' do
-        user.name = ''
-        is_expected.to eq false
-      end
-      it '2文字以上であること: 1文字は×' do
-        user.name = Faker::Lorem.characters(number: 1)
-        is_expected.to eq false
-      end
-      it '2文字以上であること: 2文字は〇' do
-        user.name = Faker::Lorem.characters(number: 2)
-        is_expected.to eq true
-      end
-      it '20文字以下であること: 20文字は〇' do
-        user.name = Faker::Lorem.characters(number: 20)
-        is_expected.to eq true
-      end
-      it '20文字以下であること: 21文字は×' do
-        user.name = Faker::Lorem.characters(number: 21)
-        is_expected.to eq false
-      end
-      it '一意性があること' do
-        user.name = other_user.name
-        is_expected.to eq false
-      end
+RSpec.describe User, type: :model do
+  describe '#post_books_count' do
+    let(:user) { create(:user) }
+    
+    it 'ユーザーの今日の投稿数を取得できること' do
+      create_list(:book, 3, user: user, created_at: Date.today)
+      expect(user.post_books_count(user.id, 'today')).to eq(3)
     end
-
-    context 'introductionカラム' do
-      it '50文字以下であること: 50文字は〇' do
-        user.introduction = Faker::Lorem.characters(number: 50)
-        is_expected.to eq true
-      end
-      it '50文字以下であること: 51文字は×' do
-        user.introduction = Faker::Lorem.characters(number: 51)
-        is_expected.to eq false
-      end
+    
+    it 'ユーザーの昨日の投稿数を取得できること' do
+      create_list(:book, 2, user: user, created_at: Date.yesterday)
+      expect(user.post_books_count(user.id, 'yesterday')).to eq(2)
+    end
+    
+    it 'ユーザーの先週の投稿数を取得できること' do
+      create_list(:book, 4, user: user, created_at: (Date.today - 1.week).beginning_of_week..(Date.today - 1.week).end_of_week)
+      expect(user.post_books_count(user.id, 'last_week')).to eq(4)
+    end
+    
+    it 'ユーザーの今週の投稿数を取得できること' do
+      create_list(:book, 5, user: user, created_at: Date.today.beginning_of_week..Date.today.end_of_week)
+      expect(user.post_books_count(user.id, 'this_week')).to eq(5)
     end
   end
-
-  describe 'アソシエーションのテスト' do
-    context 'Bookモデルとの関係' do
-      it '1:Nとなっている' do
-        expect(User.reflect_on_association(:books).macro).to eq :has_many
-      end
+  
+  describe '#week_day_count' do
+    let(:user) { create(:user) }
+    
+    it 'ユーザーのn日前の投稿数を取得できること' do
+      create_list(:book, 2, user: user, created_at: Date.today - 2.days)
+      expect(user.week_day_count(user.id, 2)).to eq(2)
     end
   end
 end

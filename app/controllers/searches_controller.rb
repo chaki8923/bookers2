@@ -5,8 +5,6 @@ class SearchesController < ApplicationController
     match_type = params[:match_type]
     @tag = params[:tags]
     @results = search(keyword, @category, match_type, @tag)
-    ## TODO：あとで消す
-    Rails.logger.debug "@results---------------------------------#{@results}"
 
     render 'searches/index'
   end

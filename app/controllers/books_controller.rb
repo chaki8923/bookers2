@@ -2,6 +2,8 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    ## TODO：あとで消す
+    Rails.logger.debug "params---------------------------------#{params}"
     @new_form_book = Book.new
     @book_comment = BookComment.new
     increment_view_count(@book)
@@ -26,17 +28,16 @@ class BooksController < ApplicationController
       @books = Book.all
       url = request.referrer
       ## TODO：あとで消す
-      Rails.logger.debug "url---------------------------------#{url}"
-      if url.include?('books')
+      if url.present? && url.include?('books')
         # booksコントローラから呼び出された場合の処理
         render 'index'
-      elsif url.include?('users')
+      elsif url.present? && url.include?('users')
         # usersコントローラから呼び出された場合の処理
-         Rails.logger.debug "こっちな---------------------------------#{url}"
         flash[:error] = @book.errors.full_messages.join(", ")
         redirect_to users_path
       else
         # その他のコントローラから呼び出された場合の処理
+         render 'index'
       end
       
     end
@@ -60,8 +61,6 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
-    ## TODO：あとで消す
-    Rails.logger.debug "@book---------------------------------#{@book.inspect}"
     @book.delete
     redirect_to books_path
   end
