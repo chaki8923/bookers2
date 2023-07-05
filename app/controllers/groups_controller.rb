@@ -9,13 +9,12 @@ class GroupsController < ApplicationController
   end
 
   def index
+    @book = Book.new
     @groups = Group.all
-    # respond_to do |format|
-    #   format.js
-    # end
   end
 
   def show
+    
     @group = Group.find(params[:id])
   end
   

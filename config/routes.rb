@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   end
   
   resources :users, only: [:index,:show,:edit,:update] do
-     get '/search_count/:id', to: 'users#search_count', as: 'search_count'
+    get '/search_count/:id', to: 'users#search_count', as: 'search_count'
   end
+  # get '/users/:id/search_count/:date', to: 'users#search_count', as: 'search_count'
   resources :relationships, only: [:create, :destroy]
   resources :searches, only: [:index] do
    
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
     end
   end
   resources :groups, only: [:index, :new, :create, :show, :edit, :update, :destroy]
-  resources :chats, only: [:index, :create]
+  resources :chats, only: [:index, :create, :show]
   resources :view_counts, only: [:create]
   
   resources :notifications, only: [:new, :create] do

@@ -23,7 +23,7 @@
           <% if current_user.following?(user) %>
             <%= link_to 'フォロー外す',  relationship_path(id: user.id), method: :delete, class: 'btn btn-primary'  %>
             <% if current_user.following?(user) &&  user.following?(current_user)%>
-              <%= link_to 'chatを開始',  chats_path(user_id: user.id), method: :get, class: 'btn btn-primary'  %>
+              <%= link_to 'chatを開始',  chat_path(user.id), method: :get, class: 'btn btn-primary'  %>
             <% end %>
           <% else %>
             <%= link_to 'フォロー',  relationships_path(follow_id: user.id), method: :post, class: 'btn btn-secondary'  %>
