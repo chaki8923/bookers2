@@ -1,25 +1,21 @@
-# README
+デプロイ準備方法
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Gemfileに以下の行を追加してください：
+ruby
+Copy code
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
+gem "net-smtp"
+gem "net-pop"
+gem "net-imap"
+上記の設定は、dotenv-rails gemを追加し、本番環境でのみmysql2 gemをインストールするよう指定しています。また、SMTP、POP、IMAPの通信を行うために必要なgemも追加しています。
 
-Things you may want to cover:
+コマンドラインで以下のコマンドを実行してください（本番環境では実行しないでください）：
+css
+Copy code
+bundle install --without production
+このコマンドは、production グループのgemをインストールせずに、その他のgemをインストールします。
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# bookers2
+以上の手順を実行することで、デプロイの準備が整います。ご利用の環境に応じて適切なgemがインストールされ、必要なパッケージが取得されます。
