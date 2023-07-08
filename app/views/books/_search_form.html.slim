@@ -1,0 +1,14 @@
+form action="<%= searches_path %>" method="GET" class="form-inline"
+  .form-group
+    input type="text" class="form-control" name="keyword" placeholder="キーワード"
+  .form-group
+    select class="form-control" name="category"
+      option value="user" User
+      option value="book" Book
+  .form-group
+    select class="form-control" name="match_type"
+      option value="prefix" 前方一致
+      option value="suffix" 後方一致
+      option value="exact" 完全一致
+      option value="partial" 部分一致
+  button type="submit" class="btn btn-primary" 検索

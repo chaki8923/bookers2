@@ -1,0 +1,43 @@
+header
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    .container
+      a.navbar-brand href="/" do
+        span Bookers
+      button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+        span.navbar-toggler-icon
+      div.collapse.navbar-collapse#navbarNavDropdown
+        ul.navbar-nav.ml-auto
+          - if user_signed_in?
+            li
+              = link_to user_path(current_user), class: 'nav-link text-light' do
+                i.fas.fa-home
+                |  home
+            li
+              = link_to users_path, class: 'nav-link text-light' do
+                i.fas.fa-users
+                |  users
+            li
+              = link_to books_path, class: 'nav-link text-light' do
+                i.fas.fa-book-open
+                |  books
+            li
+              = link_to destroy_user_session_path, method: :delete, class: 'nav-link text-light' do
+                i.fas.fa-sign-out-alt
+                |  log out
+          - else
+            li
+              = link_to root_path, class: 'nav-link text-light' do
+                i.fas.fa-home
+                |  home
+            li
+              = link_to home_about_path, class: 'nav-link text-light' do
+                i.fas.fa-link
+                |  about
+            li
+              = link_to new_user_registration_path, class: 'nav-link text-light' do
+                i.fas.fa-user-plus
+                |  signup
+            li
+              = link_to new_user_session_path, class: 'nav-link text-light' do
+                i.fas.fa-sign-in-alt
+                |  login

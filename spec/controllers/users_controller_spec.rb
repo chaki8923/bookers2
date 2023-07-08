@@ -94,13 +94,13 @@ RSpec.describe UsersController, type: :controller do
     end
       
   describe 'GET search_count' do
-  it '正常なレスポンスを返すこと' do
-   get :search_count, params: { id: user.id, date: Date.today }, format: :js, xhr: true
+   it '正常なレスポンスを返すこと' do
+    get :search_count, params: { user_id: user.id, date: Date.today, id: user.id }, format: :js, xhr: true
     expect(response).to have_http_status(:success)
   end
   
   it '対象のユーザーを取得すること' do
-    get :search_count, params: { id: user.id, date: Date.today }, format: :js, xhr: true
+    get :search_count, params: { user_id: user.id, date: Date.today, id: user.id }, format: :js, xhr: true
     expect(assigns(:user)).to eq(user)
   end
 
@@ -108,7 +108,7 @@ RSpec.describe UsersController, type: :controller do
     FactoryBot.create(:book, user: user, created_at: Date.today)
     FactoryBot.create(:book, user: user, created_at: Date.today)
     FactoryBot.create(:book, user: user, created_at: Date.yesterday)
-    get :search_count, params: { id: user.id, date: Date.today }, format: :js, xhr: true
+    get :search_count, params: { user_id: user.id, date: Date.today, id: user.id }, format: :js, xhr: true
     expect(assigns(:dat_of_count)).to eq(2)
   end
  end

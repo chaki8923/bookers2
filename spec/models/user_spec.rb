@@ -15,7 +15,12 @@ RSpec.describe User, type: :model do
     end
     
     it 'ユーザーの先週の投稿数を取得できること' do
-      create_list(:book, 4, user: user, created_at: (Date.today - 1.week).beginning_of_week..(Date.today - 1.week).end_of_week)
+      create_list(:book, 4, user: user, created_at: (Date.today - 1.week).beginning_of_week)
+      expect(user.post_books_count(user.id, 'last_week')).to eq(4)
+    end
+    
+     it 'ユーザーの先週の投稿数を取得できること' do
+      create_list(:book, 4, user: user, created_at: (Date.today - 1.week).end_of_week)
       expect(user.post_books_count(user.id, 'last_week')).to eq(4)
     end
     

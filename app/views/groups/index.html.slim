@@ -1,0 +1,15 @@
+- if flash[:notice]
+  .alert.alert-success.alert-dismissible.fade.show role="alert"
+    = flash[:notice]
+
+.users-index
+  .users-info
+    h2 User info
+    = render 'users/info', user: current_user
+    
+    h2.mt-3 New book
+    = render 'books/form', book: @book
+
+  .right-colmun
+    h2 Groups
+    = render 'index', users: @users

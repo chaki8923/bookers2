@@ -1,0 +1,16 @@
+table.table
+  tr
+    td
+      = image_tag user.get_profile_image, size: '100x100'
+  tr
+    th name
+    - if user.name.present?
+      th= user.name
+  tr
+    th introduction
+    - if user.introduction.present?
+      th= user.introduction
+div.row
+  - if current_user.id == user.id
+    = link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do
+      i.fas.fa-user-cog

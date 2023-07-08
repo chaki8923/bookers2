@@ -1,46 +1,46 @@
 <canvas id="myLineChart"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    $(document).on('turbolinks:load', function() {
-      var existingChart = Chart.getChart("myLineChart");
-      if (existingChart) {
-        existingChart.destroy();
-      }
-      var ctx = document.getElementById("myLineChart");
-      var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['7日前','6日前', '5日前', '4日前', '3日前', '2日前', '1日前'],
-          datasets: [
-            {
-              label: '投稿した本の数',
-              data: [
-                  <% 7.downto(1) do |n| %>
-                    '<%= @user.week_day_count(params[:id],n)  %>',
-                  <% end %>
-              ],
-              borderColor: "rgba(0,0,255,1)",
-              backgroundColor: "rgba(0,0,0,0)",
-              tension: 0.4
-            }
-          ],
+<script>
+  $(document).on('turbolinks:load', function() {
+    var existingChart = Chart.getChart("myLineChart");
+    if (existingChart) {
+      existingChart.destroy();
+    }
+    var ctx = document.getElementById("myLineChart");
+    var myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['7日前','6日前', '5日前', '4日前', '3日前', '2日前', '1日前'],
+        datasets: [
+          {
+            label: '投稿した本の数',
+            data: [
+                <% 7.downto(1) do |n| %>
+                  '<%= @user.week_day_count(params[:id],n)  %>',
+                <% end %>
+            ],
+            borderColor: "rgba(0,0,255,1)",
+            backgroundColor: "rgba(0,0,0,0)",
+            tension: 0.4
+          }
+        ],
+      },
+      options: {
+        title: {
+          display: true,
+          text: '7日間の投稿数の比較'
         },
-        options: {
-          title: {
-            display: true,
-            text: '7日間の投稿数の比較'
+        responsive: true,
+        scales: {
+          y:{
+            suggestedMin: 0,
+            suggestedMax: 10
           },
-          responsive: true,
-          scales: {
-            y:{
-              suggestedMin: 0,
-              suggestedMax: 10
-            },
-            x:{
-              stacked: true
-            },
+          x:{
+            stacked: true
           },
-        }
-      });
+        },
+      }
     });
-  </script>
+  });
+</script>

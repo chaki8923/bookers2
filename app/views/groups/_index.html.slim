@@ -1,0 +1,21 @@
+.container
+  table.table
+    thead
+      tr
+        th Image
+        th Name
+        th Introduction
+        th メンバー
+    tbody
+      - @groups.each do |group|
+        tr
+          td= image_tag(group.image, size: '100x100') if group.image.attached?
+          td= link_to group.name, group_path(group), method: :get
+          td= group.introduction
+          td
+            - group.users.each do |user|
+              = user.name
+          - if group.owner_id == current_user.id
+            td= link_to 'Edit', edit_group_path(group), class: 'btn btn-primary'
+          td= link_to 'Destroy', group_path(group), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'btn btn-sm btn-danger'
+  = link_to 'New Group', new_group_path, class: 'btn btn-primary'
