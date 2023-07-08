@@ -1,0 +1,7 @@
+.comment-form
+  = form_with model: [@book, @book_comment], url: book_book_comments_path(@book), local: false do |f|
+    .form-group
+      = f.label :comment
+      = f.text_area :comment, class: 'form-control book_comment'
+    .form-group
+      = f.submit 'Submit', class: 'btn btn-success'

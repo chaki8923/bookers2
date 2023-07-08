@@ -1,0 +1,14 @@
+.container
+  h1 Create a New Notification
+  = form_with(model: @notification, url: notifications_path, local: true) do |form|
+    .form-group
+      = form.label :title, "Title"
+      = form.text_field :title, class: "form-control"
+  
+    .form-group
+      = form.label :body, "Body"
+      = form.text_area :body, class: "form-control"
+  
+    = form.hidden_field :group_id, value: @group.id
+  
+    = form.submit "Send", class: "btn btn-primary"

@@ -61,6 +61,7 @@ class User < ApplicationRecord
       when 'last_week'
         start_of_last_week = (today - 1.week).beginning_of_week
         end_of_last_week = (today - 1.week).end_of_week
+        
         user.books.where("DATE(created_at) >= ? AND DATE(created_at) <= ?", start_of_last_week, end_of_last_week).count
     end
     

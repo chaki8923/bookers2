@@ -1,0 +1,20 @@
+h1 Chats
+
+h2 Chat with <%= @user.name %>
+
+ul
+  - @chats.each do |chat|
+    li
+       | #{chat.sender.name}: #{chat.message}
+
+h3 Send a Message:
+
+= render 'layouts/errors', obj: @chat
+
+= form_with(model: @chat, url: chats_path, method: :post) do |form|
+  = form.hidden_field :sender_id, value: @user.id
+  = form.hidden_field :receiver_id, value: @receiver_id
+  div.form-group
+    = form.label :message
+    = form.text_field :message, class: 'form-control'
+  = form.submit 'Send', class: 'btn btn-primary'

@@ -1,0 +1,34 @@
+h2 Book detail
+table.table
+  tr
+    td
+      = link_to(@book.user) do
+        = image_tag @book.user.get_profile_image, size: "100x100"
+        br
+        = @book.user.name
+      div id="post_raty#{@book.id}"
+        javascript:
+          $('#post_raty#{@book.id}').empty();
+          $('#post_raty#{@book.id}').empty();
+          var elem#{@book.id} = document.querySelector('#post_raty#{@book.id}');
+          var opt#{@book.id} = {
+            starOn: "#{asset_path('star-on.png')}",
+            starOff: "#{asset_path('star-off.png')}",
+            score: #{@book.star},
+            readOnly: true
+          };
+          raty(elem#{@book.id}, opt#{@book.id});
+    td = link_to @book.title, @book
+    = render 'favorites/favorite_btn', book: @book
+    td コメント数：#{@book.book_comments.count}
+    td 閲覧数：#{@book.safe_view_count}
+    td = @book.body
+    td = link_to @book.tags, books_path(tags: @book.tags) if @book.tags.present?
+    - if current_user.id == @book.user.id
+      td = link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success"
+      td = link_to 'Destroy!!', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"
+div.comment-index
+  = render 'book_comments/index', book: @book
+div
+  div#comments-error.comments-error
+  = render 'book_comments/comment_form', locals: { book_comment: @book_comment, book: @book }

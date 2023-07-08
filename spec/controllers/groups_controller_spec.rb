@@ -9,7 +9,6 @@ RSpec.describe GroupsController, type: :controller do
   describe 'GET #new' do
     it '新しいグループと本を割り当てること' do
       get :new
-      puts "あああああああああああああああ#{Group}"
       expect(assigns(:group)).to be_an_instance_of(Group)
       expect(assigns(:book)).to be_an_instance_of(Book)
     end

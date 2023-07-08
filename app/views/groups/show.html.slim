@@ -1,0 +1,24 @@
+.container
+  h1 Group Detail
+  table.table
+    thead
+      tr
+        th Image
+        th Name
+        th Introduction
+        th
+    tbody
+      tr
+        td= image_tag @group.image, size: '100x100' if @group.image.attached?
+        td= link_to @group.name, group_path(@group), method: :get, class: ''
+        td= @group.introduction
+        td= @group.group_users.count.to_s + '人'
+        - if @group.owner_id == current_user.id
+          td
+            = link_to 'Edit', edit_group_path(@group), class: 'btn btn-primary'
+        - else
+          td
+            = link_to 'Join Group', group_user_join_path(@group, current_user), method: :post, class: 'btn btn-primary'
+        td
+          = link_to 'Notice', notifications_new_path(id: @group.id), method: :get, class: 'btn btn-primary'
+  = link_to 'New Group', new_group_path, class: 'btn btn-primary'
