@@ -8,7 +8,8 @@
 
 # Features
 
-課題に加えて、leteropnerを実装。実際にメールがletteopnerに届く
+課題に加えて、leteropnerを実装。開発環境でメールがletteopnerに届く。
+BEMはchat画面に
 
 # Requirement
 
