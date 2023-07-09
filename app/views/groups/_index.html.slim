@@ -17,5 +17,5 @@
               = user.name
           - if group.owner_id == current_user.id
             td= link_to 'Edit', edit_group_path(group), class: 'btn btn-primary'
-          td= link_to 'Destroy', group_path(group), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'btn btn-sm btn-danger'
+            td= link_to 'Destroy', group_path(group), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'btn btn-sm btn-danger'
   = link_to 'New Group', new_group_path, class: 'btn btn-primary'
