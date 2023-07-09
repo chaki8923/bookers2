@@ -72,11 +72,11 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   # config.hosts << "a8c9cb2b77b24968bf1f0967084f4a3f.vfs.cloud9.us-east-1.amazonaws.com"
   # config.hosts << "49e69874be6d4ef3a0718e9b15430b98.vfs.cloud9.us-east-1.amazonaws.com"
-  config.hosts << "33c1c99da5214eeeaa09783484f85072.vfs.cloud9.us-east-1.amazonaws.com"
+  config.hosts << "52.200.101.118"
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: '33c1c99da5214eeeaa09783484f85072.vfs.cloud9.us-east-1.amazonaws.com', port: 3000, protocol: 'https'}
+  config.action_mailer.default_url_options = { host: '52.200.101.118', port: 3000, protocol: 'http'}
 end
