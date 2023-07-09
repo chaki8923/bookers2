@@ -17,7 +17,8 @@ class ChatsController < ApplicationController
     @chat = Chat.new
     @user = current_user
     @receiver_id = params[:id]
-    @chats = Chat.between(current_user.id, params[:id])
+    @other =  User.find(@receiver_id)
+    @chats = Chat.between(current_user.id, params[:id]).order(created_at: :asc)
   end
 
   private

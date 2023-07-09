@@ -1,20 +1,30 @@
-h1 Chats
+.chat
+  .chat__conversation
+    h2.chat__subtitle #{@other.name}と#{@user.name}のチャットルーム
 
-h2 Chat with <%= @user.name %>
+    ul.chat__message-list
+      - @chats.each do |chat|
+       - if chat.sender.id == current_user.id
+          li.chat__message.my-message
+            span.chat__message-text= chat.message
+            div
+              = image_tag chat.sender.get_profile_image, size: '100x100', class: 'chat__user-image'
+              p.chat__sender= chat.sender.name
+       - else
+          li.chat__message.other-message
+            div
+              = image_tag chat.sender.get_profile_image, size: '100x100', class: 'chat__user-image'
+              p.chat__sender= chat.sender.name
+            span.chat__message-text= chat.message
+  .chat__send-message
+    h3.chat__send-title Send a Message:
 
-ul
-  - @chats.each do |chat|
-    li
-       | #{chat.sender.name}: #{chat.message}
+    = render 'layouts/errors', obj: @chat
 
-h3 Send a Message:
+    = form_with(model: @chat, url: chats_path, method: :post) do |form|
+      = form.hidden_field :sender_id, value: @user.id
+      = form.hidden_field :receiver_id, value: @receiver_id
+      .chat__form-group
+        = form.text_area :message, class: 'chat__input'
+      = form.submit 'Send', class: 'chat__submit-button'
 
-= render 'layouts/errors', obj: @chat
-
-= form_with(model: @chat, url: chats_path, method: :post) do |form|
-  = form.hidden_field :sender_id, value: @user.id
-  = form.hidden_field :receiver_id, value: @receiver_id
-  div.form-group
-    = form.label :message
-    = form.text_field :message, class: 'form-control'
-  = form.submit 'Send', class: 'btn btn-primary'
