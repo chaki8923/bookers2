@@ -69,17 +69,22 @@ ActiveRecord::Schema.define(version: 2023_07_02_045336) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "book_id"
+    t.integer "user_id", null: false
+    t.integer "book_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_favorites_on_book_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "group_users", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "user_id"
+    t.integer "group_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id", "user_id"], name: "index_group_users_on_group_id_and_user_id", unique: true
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -135,5 +140,8 @@ ActiveRecord::Schema.define(version: 2023_07_02_045336) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "users", column: "receiver_id"
   add_foreign_key "chats", "users", column: "sender_id"
+  add_foreign_key "group_users", "groups"
+  add_foreign_key "group_users", "users"
   add_foreign_key "notifications", "groups"
+  add_foreign_key "view_counts", "users"
 end
