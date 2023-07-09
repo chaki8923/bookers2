@@ -22,7 +22,9 @@
           <%= flash[:error] %>
         </div>
       <% end %>
-
+        <!-- デバイス用 -->
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
         <%= yield %>
       </main>
     <%= render 'layouts/footer' %>
