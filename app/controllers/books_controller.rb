@@ -1,12 +1,15 @@
 class BooksController < ApplicationController
 
   def show
-    @book = Book.find(params[:id])
-    ## TODO：あとで消す
-    Rails.logger.debug "params---------------------------------#{params}"
-    @new_form_book = Book.new
-    @book_comment = BookComment.new
-    increment_view_count(@book)
+    begin
+      @book = Book.find(params[:id])
+      @new_form_book = Book.new
+      @book_comment = BookComment.new
+      increment_view_count(@book)
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "NOT FOUND BOOK ID ---->このidの投稿ないよ#{params[:id]}<----"
+      redirect_to books_path
+    end
   end
 
   def index
@@ -44,9 +47,14 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:id])
-    if @book.user.id != current_user.id
-      redirect_to books_path, notice: "You can't edit other user's book."
+    begin
+      @book = Book.find(params[:id])
+      if @book.user.id != current_user.id
+        redirect_to books_path, notice: "You can't edit other user's book."
+      end
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "TOU CAN NOT EDIT THIS BOOK ---->このidの投稿ないよ#{params[:id]}<----"
+      redirect_to books_path
     end
   end
 

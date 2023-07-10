@@ -14,11 +14,16 @@ class ChatsController < ApplicationController
   end
   
   def show
-    @chat = Chat.new
-    @user = current_user
-    @receiver_id = params[:id]
-    @other =  User.find(@receiver_id)
-    @chats = Chat.between(current_user.id, params[:id]).order(created_at: :asc)
+    begin
+      @chat = Chat.new
+      @user = current_user
+      @receiver_id = params[:id]
+      @other =  User.find(@receiver_id)
+      @chats = Chat.between(current_user.id, params[:id]).order(created_at: :asc)
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "NOT FOUND CHAT ROOM"
+      redirect_to users_path
+    end
   end
 
   private
