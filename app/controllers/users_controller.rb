@@ -2,9 +2,14 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update]
 
   def show
-    @user = User.find(params[:id])
-    @books = @user.books
-    @book = Book.new
+    begin
+      @user = User.find(params[:id])
+      @books = @user.books
+      @book = Book.new
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "NOT FOUND CHAT USER USER_ID --->このidのuserいないよ#{params[:id]}<---"
+      redirect_to users_path
+    end
   end
 
   def index
@@ -13,9 +18,14 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_to user_path(current_user), notice: "You can't edit other user's profile."
+    begin
+      @user = User.find(params[:id])
+      unless @user == current_user
+        redirect_to user_path(current_user), notice: "You can't edit other user's profile."
+      end
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "存在しないユーザーを編集できません。"
+      redirect_to users_path
     end
   end
 

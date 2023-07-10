@@ -5,7 +5,12 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.find(params[:id])
+    begin
+      @group = Group.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "YOU CAN NOT EDIT THIS BOOK ---->このidの投稿ないよ#{params[:id]}<----"
+      redirect_to groups_path
+    end
   end
 
   def index
@@ -14,8 +19,12 @@ class GroupsController < ApplicationController
   end
 
   def show
-    
-    @group = Group.find(params[:id])
+    begin
+      @group = Group.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "NOT FOUND CHAT GROUP GROUP_ID ---->このidのgroupないよ#{params[:id]}<----"
+      redirect_to groups_path
+    end
   end
   
   def create
