@@ -78,5 +78,6 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+   config.hosts << "33c1c99da5214eeeaa09783484f85072.vfs.cloud9.us-east-1.amazonaws.com"
   config.action_mailer.default_url_options = { host: '52.200.101.118', port: 3000, protocol: 'http'}
 end
